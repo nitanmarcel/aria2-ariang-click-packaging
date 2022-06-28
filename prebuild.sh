@@ -5,7 +5,7 @@ set -e
 export WORKDIR="${ROOT}/prebuild"
 export ARIANG_DIR="${ROOT}/www"
 
-export CLICK_VERSION="1.2.4"
+export ARIANG_VERSION="1.2.4"
 
 rm -rf ${WORKDIR}
 mkdir ${WORKDIR}
