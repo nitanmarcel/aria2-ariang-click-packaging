@@ -3,18 +3,19 @@ builder: cmake
 prebuild: "bash ${ROOT}/prebuild.sh"
 kill: ariang
 dependencies_target:
-  - libasan2
-dependencies_host:
-  - libgnutls-dev 
-  - nettle-dev
-  - libgmp-dev
-  - libssh2-1-dev
   - libc-ares-dev
-  - libxml2-dev
-  - zlib1g-dev
   - libsqlite3-dev
-  - pkg-config
+  - zlib1g-dev
+  - libssh2-1-dev
   - libxml2-dev
+  - libgnutls-dev
+  - nettle-dev
+  - libasan2
+  - libssh2-1
+  
+dependencies_host:
+  - libgmp-dev
+  - pkg-config
   - libcppunit-dev
   - autoconf
   - automake
@@ -25,3 +26,4 @@ dependencies_host:
 
 install_lib:
   - /usr/lib/${ARCH_TRIPLET}/libasan.so*
+  - /usr/lib/${ARCH_TRIPLET}/libssh2.so.*

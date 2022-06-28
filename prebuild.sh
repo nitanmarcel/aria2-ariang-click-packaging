@@ -16,7 +16,7 @@ echo "Building aria2"
 git clone https://github.com/aria2/aria2 -b release-1.36.0 --depth=1
 cd aria2
 autoreconf -i
-./configure --host $ARCH_TRIPLET CPPFLAGS="-fsanitize=address" LDFLAGS="-fsanitize=address" --prefix="${INSTALL_DIR}"
+PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig  ./configure --host $ARCH_TRIPLET CPPFLAGS="-fsanitize=address" LDFLAGS="-fsanitize=address" --prefix="${INSTALL_DIR}"
 make -j$(nproc --all)
 make install
 
