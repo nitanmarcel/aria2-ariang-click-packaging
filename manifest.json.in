@@ -9,7 +9,7 @@
             "desktop":  "ariang.desktop"
         }
     },
-    "version": "1.0.0",
+    "version": "0.0.1unreleased",
     "maintainer": "Marcel Alexandru Nitan <nitan.marcel@protonmail.com>",
     "framework" : "@CLICK_FRAMEWORK@"
 }
