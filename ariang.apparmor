@@ -2,6 +2,7 @@
     "policy_groups": [
         "networking",
         "content_exchange",
+        "content_exchange_source",
         "webview"
     ],
     "policy_version": 16.04

@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>Main.qml</file>
+        <file>ImportPage.qml</file>
+        <file>ExportPage.qml</file>
     </qresource>
 </RCC>
