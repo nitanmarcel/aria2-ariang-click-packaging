@@ -1,0 +1,27 @@
+clickable_minimum_required: 7.1.2
+builder: cmake
+prebuild: "bash ${ROOT}/prebuild.sh"
+kill: ariang
+dependencies_target:
+  - libasan2
+dependencies_host:
+  - libgnutls-dev 
+  - nettle-dev
+  - libgmp-dev
+  - libssh2-1-dev
+  - libc-ares-dev
+  - libxml2-dev
+  - zlib1g-dev
+  - libsqlite3-dev
+  - pkg-config
+  - libxml2-dev
+  - libcppunit-dev
+  - autoconf
+  - automake
+  - autotools-dev
+  - autopoint
+  - libtool
+  - wget
+
+install_lib:
+  - /usr/lib/${ARCH_TRIPLET}/libasan.so*
