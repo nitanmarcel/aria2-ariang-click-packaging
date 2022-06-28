@@ -6,4 +6,4 @@ AriaNg, a modern web frontend making aria2 easier to use.
 
 Copyright (C) 2022  Marcel Alexandru Nitan
 
-Licensed under the MIT license
+Licensed under the GPLv3 license
