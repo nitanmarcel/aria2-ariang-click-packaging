@@ -3,7 +3,7 @@ import Ubuntu.Components 1.3
 //import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
-import QtWebEngine 1.7
+import Morph.Web 0.1
 
 MainView {
     id: root
@@ -28,12 +28,16 @@ MainView {
 
     Component {
         id: ariangComponent
-        WebEngineView {
+        WebView {
             id: webView
             anchors.fill: parent
-            url: "http://localhost:6888" 
+            url: "http://localhost:6888"
 
-            profile: WebEngineProfile {
+            enableSelectOverride: true
+            settings.pluginsEnabled: true
+            settings.javascriptCanAccessClipboard: true
+
+            context: WebContext {
                 storageName: "Storage"
                 persistentStoragePath: "/home/phablet/.local/share/ariang.nitanmarcel/ariang.nitanmarcel/QWebEngine"
                 onDownloadRequested: (download) => {
