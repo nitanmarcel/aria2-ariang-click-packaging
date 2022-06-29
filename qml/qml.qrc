@@ -3,5 +3,6 @@
         <file>Main.qml</file>
         <file>ImportPage.qml</file>
         <file>ExportPage.qml</file>
+        <file>userscripts/themechange.js</file>
     </qresource>
 </RCC>
