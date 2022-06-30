@@ -24,6 +24,8 @@ int main(int argc, char *argv[])
     QString applicationName = "ariang.nitanmarcel";
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+
 
     QGuiApplication *app = new QGuiApplication(argc, (char**)argv);
     app->setApplicationName(applicationName);
