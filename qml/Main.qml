@@ -27,15 +27,6 @@ MainView {
         Page {
             id: mainPage
             anchors.fill: parent
-            Loader {
-                id: pageLoader
-                anchors.fill: parent
-            }
-        }
-    }
-
-    Component {
-        id: ariangComponent
         WebView {
             id: webView
             anchors.fill: parent
@@ -104,18 +95,6 @@ MainView {
                     runJavaScript('document.body.classList.remove("theme-dark")')
             }
         }
-    }
-
-    Connections {
-        target: Qt.application
-        onStateChanged: (state) => {
-            if (!force_ui_on)
-            {
-                if (Qt.application.state !== Qt.ApplicationActive)
-                    pageLoader.sourceComponent = null
-                else
-                    pageLoader.sourceComponent = ariangComponent
-            }
         }
     }
 
