@@ -47,7 +47,7 @@ MainView {
 
             context: WebContext {
                 storageName: "Storage"
-                persistentStoragePath: "/home/phablet/.local/share/ariang.nitanmarcel/ariang.nitanmarcel/QWebEngine"
+                persistentStoragePath: "/home/phablet/.local/share/ariang.nitanmarcel/QWebEngine"
 
                 userScripts: [
                     WebEngineScript {
