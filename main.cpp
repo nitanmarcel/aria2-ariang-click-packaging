@@ -14,6 +14,8 @@
 
 #include <map>
 #include <stdlib.h>
+#include <signal.h>
+#include <cstdio>
 
 std::map<std::string, std::string> mimes;
 
@@ -25,16 +27,22 @@ int main(int argc, char *argv[])
 
     QGuiApplication *app = new QGuiApplication(argc, (char**)argv);
     app->setApplicationName(applicationName);
-
-    qDebug() << "Starting app from main.cpp";
     
-    QString clickConfigPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QDir::separator() + applicationName;
-    QString clockStoragePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QDir::separator() + applicationName;
+    QString configLocation = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QDir::separator() + applicationName;
+    QString storageLocation = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QDir::separator();
+    QString cacheLocation = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
 
-    qDebug() << "Config path" << clickConfigPath;
-    QDir clickConfigDir(clickConfigPath);
-    QString ariaConfigPath = clickConfigPath + QDir::separator() + "aria.conf";
+
+    QString rpcDataLocation = storageLocation + QDir::separator() + "rpc";
+    QString downloadsLocation = storageLocation + QDir::separator() + "downloads";
+
+    QDir rpcDataDir(rpcDataLocation);
+    QDir downloadsDir(downloadsLocation);
+
+    QDir clickConfigDir(configLocation);
+    QString ariaConfigPath = configLocation + QDir::separator() + "aria2.conf";
     QFile ariaConfigFile(ariaConfigPath);
+    QFile ariaSessionFile(rpcDataLocation + QDir::separator() + "aria2.session");
     
     QFile prebuildAriaConfigFile("aria2.conf");
 
@@ -44,17 +52,31 @@ int main(int argc, char *argv[])
     if (!ariaConfigFile.exists())
         prebuildAriaConfigFile.copy(ariaConfigPath);
 
+    if (!rpcDataDir.exists())
+        rpcDataDir.mkpath(".");
+
+    if (!downloadsDir.exists())
+        downloadsDir.mkpath(".");
+
     qputenv("LD_PRELOAD", "");
 
     QString program = QDir::currentPath() + "/bin/aria2c";
     QStringList arguments;
     arguments << "--conf-path=" + ariaConfigPath;
+    arguments << "--dir=" + downloadsLocation;
+    arguments << "--log=" + cacheLocation +  QDir::separator() + "aria2.log";
+    arguments << "--save-session=" + rpcDataLocation + QDir::separator() + "aria2.session";
+    if (ariaSessionFile.exists())
+        arguments << "--input-file=" + rpcDataLocation + QDir::separator() + "aria2.session";
+    arguments << "--server-stat-of=" + rpcDataLocation + QDir::separator() + "aria2.serverstat";
+    arguments << "--server-stat-if=" + rpcDataLocation + QDir::separator() + "aria2.serverstat";
+    arguments << "--load-cookies=" + rpcDataLocation + QDir::separator() + "aria2.cookies";
+    arguments << "--save-cookies=" + rpcDataLocation + QDir::separator() + "aria2.cookies";
     arguments << "--enable-rpc";
     arguments << "--rpc-allow-origin-all";
-    arguments << "--dir=" + clockStoragePath + QDir::separator() + "/Downloads";
 
-    QProcess aria;
-    aria.start(program, arguments);
+    QProcess process;
+    process.start(program, arguments);
 
     mimes[".html"] = "text/html";
     mimes[".css"] = "text/css";
@@ -94,5 +116,9 @@ int main(int argc, char *argv[])
     view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->show();
 
-    return app->exec();
+    int ret = app->exec();
+    kill(process.pid(), SIGINT);
+    process.waitForFinished();
+
+    return ret;
 }
